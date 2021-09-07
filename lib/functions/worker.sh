@@ -75,6 +75,15 @@ function LintCodebase() {
     info "----------------------------------------------"
     info "----------------------------------------------"
 
+    if [[ ${FILE_TYPE} == *"PHP_PSALM"* ]]; then
+      debug "FILE_TYPE is related to Psalm: ${FILE_TYPE}"
+      #https://stackoverflow.com/a/35466008/8049180
+      debug "Configure composer to suppress SSL errors"
+      composer config -g -- disable-tls true
+      debug "Going to run composer install"
+      composer install --working-dir=/tmp/lint
+    fi
+
     ##################
     # Lint the files #
     ##################
